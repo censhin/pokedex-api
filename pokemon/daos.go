@@ -6,7 +6,7 @@ import (
 	"gopkg.in/mgo.v2/bson"
 )
 
-func PokemonsDao() Pokemons {
+func CollectionDao() Pokemons {
 	session := db.Session()
 	defer session.Close()
 
@@ -22,7 +22,7 @@ func PokemonsDao() Pokemons {
 	return Pokemons{result}
 }
 
-func PokemonDao(name string) Pokemon {
+func MemberDao(name string) Pokemon {
 	session := db.Session()
 	defer session.Close()
 
