@@ -8,6 +8,7 @@ import (
 
 func PokemonsDao() Pokemons {
 	session := db.Session()
+	defer session.Close()
 
 	collection := session.DB("pokedex").C("pokemon")
 
@@ -23,6 +24,7 @@ func PokemonsDao() Pokemons {
 
 func PokemonDao(name string) Pokemon {
 	session := db.Session()
+	defer session.Close()
 
 	collection := session.DB("pokedex").C("pokemon")
 

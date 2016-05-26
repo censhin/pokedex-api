@@ -18,7 +18,7 @@ func Connect() {
 }
 
 func Session() *mgo.Session {
-	return session
+	return session.Copy()
 }
 
 func Close() {
