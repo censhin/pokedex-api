@@ -4,20 +4,18 @@ import (
 	"log"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
+	"github.com/censhin/pokedex-api/db"
 )
 
-func MovesDao() Moves {
-	session, err := mgo.Dial("localhost:27017")
-	if err != nil {
-		panic(err)
-	}
+func CollectionDao() Moves {
+	session := db.Session()
 	defer session.Close()
 
 	collection := session.DB("pokedex").C("moves")
 
 	result := []Move{}
 	iter := collection.Find(nil).Iter()
-	err = iter.All(&result)
+	err := iter.All(&result)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -25,17 +23,14 @@ func MovesDao() Moves {
 	return Moves{result}
 }
 
-func MoveDao(name string) Move {
-	session, err := mgo.Dial("localhost:27017")
-	if err != nil {
-		panic(err)
-	}
+func MemberDao(name string) Move {
+	session := db.Session()
 	defer session.Close()
 
 	collection := session.DB("pokedex").C("moves")
 
 	result := Move{}
-	err = collection.Find(bson.M{"name": name}).One(&result)
+	err := collection.Find(bson.M{"name": name}).One(&result)
 	if err != nil {
 		log.Fatal(err)
 	}

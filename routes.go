@@ -11,8 +11,8 @@ func InitRoutes() *mux.Router {
 
 	router.HandleFunc("/pokemon", pokemon.CollectionResource).Methods("GET")
 	router.HandleFunc("/pokemon/{id}", pokemon.MemberResource).Methods("GET")
-	router.HandleFunc("/moves", moves.MovesResource).Methods("GET")
-	router.HandleFunc("/moves/{id}", moves.MoveResource).Methods("GET")
+	router.HandleFunc("/moves", moves.CollectionResource).Methods("GET")
+	router.HandleFunc("/moves/{id}", moves.MemberResource).Methods("GET")
 
 	return router
 }

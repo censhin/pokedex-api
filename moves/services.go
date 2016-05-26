@@ -1,9 +1,9 @@
 package moves
 
-func MovesService() (Moves) {
-	return MovesDao()
+func CollectionService() (Moves) {
+	return CollectionDao()
 }
 
-func MoveService(name string) (Move) {
-	return MoveDao(name)
+func MemberService(name string) (Move) {
+	return MemberDao(name)
 }
