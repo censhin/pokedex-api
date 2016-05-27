@@ -5,7 +5,7 @@ import (
 )
 
 var session *mgo.Session = nil
-var host string = "localhost"
+var host string = "172.17.0.2"
 var port string = "27017"
 
 func Connect() {
