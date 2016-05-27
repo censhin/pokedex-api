@@ -2,7 +2,6 @@ package moves
 
 import (
 	"log"
-	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 	"github.com/censhin/pokedex-api/db"
 )
