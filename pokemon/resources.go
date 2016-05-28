@@ -33,7 +33,7 @@ func MemberResource(w http.ResponseWriter, r *http.Request) {
 func GetCollection(w http.ResponseWriter, r *http.Request) {
 	res := CollectionService()
 	if res.Code > 399 {
-		http.Error(w, res.Body, res.Code)
+		http.Error(w, res.Msg, res.Code)
 	} else {
 		w.Header().Set("Content-Type", "application/json")
 		json.NewEncoder(w).Encode(res.Body)
@@ -49,7 +49,7 @@ func PostCollection(w http.ResponseWriter, r *http.Request) {
 
 	res := PostCollectionService(body)
 	if res.Code > 399 {
-		http.Error(w, res.Body, res.Code)
+		http.Error(w, res.Msg, res.Code)
 	} else {
 		w.WriteHeader(res.Code)
 	}
@@ -60,7 +60,7 @@ func GetMember(w http.ResponseWriter, r *http.Request) {
 
 	res := MemberService(vars["id"])
 	if res.Code > 399 {
-		http.Error(w, res.Body, res.Code)
+		http.Error(w, res.Msg, res.Code)
 	} else {
 		w.Header().Set("Content-Type", "application/json")
 		json.NewEncoder(w).Encode(res.Body)
@@ -77,7 +77,7 @@ func PutMember(w http.ResponseWriter, r *http.Request) {
 
 	res := PutMemberService(vars["id"], body)
 	if res.Code > 399 {
-		http.Error(w, res.Body, res.Code)
+		http.Error(w, res.Msg, res.Code)
 	} else {
 		w.WriteHeader(res.Code)
 	}
@@ -88,7 +88,7 @@ func DeleteMember(w http.ResponseWriter, r *http.Request) {
 
 	res := DeleteMemberService(vars["id"])
 	if res.Code > 399 {
-		http.Error(w, res.Body, res.Code)
+		http.Error(w, res.Msg, res.Code)
 	} else {
 		w.WriteHeader(res.Code)
 	}

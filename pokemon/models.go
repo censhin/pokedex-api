@@ -37,6 +37,13 @@ type Evolution struct {
 }
 
 type Response struct {
-	Code int	`json:"code"`
-	Body string `json:"body"`
+	Code int	 `json:"code"`
+	Msg  string  `json:"msg"`
+	Body Pokemon `json:"body"`
+}
+
+type CollectionResponse struct {
+	Code int	  `json:"code"`
+	Msg  string   `json:"msg"`
+	Body Pokemons `json:"body"`
 }
