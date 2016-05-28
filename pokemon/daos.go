@@ -1,12 +1,11 @@
 package pokemon
 
 import (
-	"log"
 	"github.com/censhin/pokedex-api/db"
 	"gopkg.in/mgo.v2/bson"
 )
 
-func CollectionDao() Pokemons {
+func CollectionDao() (Pokemons, error) {
 	session := db.Session()
 	defer session.Close()
 
@@ -16,13 +15,13 @@ func CollectionDao() Pokemons {
 	iter := collection.Find(nil).Iter()
 	err := iter.All(&result)
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
 
-	return Pokemons{result}
+	return Pokemons{result}, nil
 }
 
-func MemberDao(name string) Pokemon {
+func MemberDao(name string) (Pokemon, error) {
 	session := db.Session()
 	defer session.Close()
 
@@ -31,17 +30,17 @@ func MemberDao(name string) Pokemon {
 	result := Pokemon{}
 	err := collection.Find(bson.M{"name": name}).One(&result)
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
 
-	return result
+	return result, nil
 }
 
-func UpdateMemberDao(name string, body Pokemon) error {
+func UpdateMemberDao(name string, body map[string]interface{}) error {
 	session := db.Session()
 	defer session.Close()
 
 	collection := session.DB("pokedex").C("pokemon")
 
-	return collection.Update(name, body)
+	return collection.Update(bson.M{"name": name}, bson.M{"$set": body})
 }

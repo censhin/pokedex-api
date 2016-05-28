@@ -1,26 +1,14 @@
 package pokemon
 
-import (
-	"log"
-	"fmt"
-)
 
-func CollectionService() Pokemons {
+func CollectionService() (Pokemons, error) {
 	return CollectionDao()
 }
 
-func MemberService(name string) Pokemon {
+func MemberService(name string) (Pokemon, error) {
 	return MemberDao(name)
 }
 
 func PutMemberService(name string, body map[string]interface{}) error {
-	//err := UpdateMemberDao(name, body)
-	fmt.Println(body)
-	var err error = nil
-	if err != nil {
-		log.Fatal(err)
-		return err
-	} else {
-		return nil
-	}
+	return UpdateMemberDao(name, body)
 }

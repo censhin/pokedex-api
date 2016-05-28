@@ -28,16 +28,28 @@ func MemberResource(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetCollection(w http.ResponseWriter, r *http.Request) {
-	res := CollectionService()
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(res)
+	res, err := CollectionService()
+	if err == mgo.ErrNotFound {
+		http.Error(w, err.Error(), 404)
+	} else if err != nil {
+		http.Error(w, err.Error(), 400)
+	} else {
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(res)
+	}
 }
 
 func GetMember(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	res := MemberService(vars["id"])
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(res)
+	res, err := MemberService(vars["id"])
+	if err == mgo.ErrNotFound {
+		http.Error(w, err.Error(), 404)
+	} else if err != nil {
+		http.Error(w, err.Error(), 400)
+	} else {
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(res)
+	}
 }
 
 func PutMember(w http.ResponseWriter, r *http.Request) {
@@ -45,7 +57,7 @@ func PutMember(w http.ResponseWriter, r *http.Request) {
 	body := make(map[string]interface{})
 	err := json.NewDecoder(r.Body).Decode(&body)
 	if err != nil {
-		http.Error(w, "Could not parse JSON to Pokemon.", 422)
+		http.Error(w, "Could not parse JSON to map.", 422)
 	}
 
 	err = PutMemberService(vars["id"], body)
