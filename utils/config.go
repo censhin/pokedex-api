@@ -20,7 +20,7 @@ func GetConfig() *Config {
     if config == nil {
         config = new(Config)
 
-        file, err := ioutil.ReadFile("../config.json")
+        file, err := ioutil.ReadFile("config.json")
         if err != nil {
             log.Fatal(err)
         }
