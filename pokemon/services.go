@@ -16,3 +16,7 @@ func MemberService(name string) (Pokemon, error) {
 func PutMemberService(name string, body map[string]interface{}) error {
 	return UpdateMemberDao(name, body)
 }
+
+func DeleteMemberService(name string) error {
+	return DeleteMemberDao(name)
+}

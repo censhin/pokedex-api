@@ -53,3 +53,12 @@ func UpdateMemberDao(name string, body map[string]interface{}) error {
 
 	return collection.Update(bson.M{"name": name}, bson.M{"$set": body})
 }
+
+func DeleteMemberDao(name string) error {
+	session := db.Session()
+	defer session.Close()
+
+	collection := session.DB("pokedex").C("pokemon")
+
+	return collection.Remove(bson.M{"name": name})
+}

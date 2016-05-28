@@ -24,6 +24,8 @@ func MemberResource(w http.ResponseWriter, r *http.Request) {
 		GetMember(w, r)
 	case "PUT":
 		PutMember(w, r)
+	case "DELETE":
+		DeleteMember(w, r)
 	default:
 		http.Error(w, "Method not allowed.", 405)
 	}
@@ -58,6 +60,7 @@ func PostCollection(w http.ResponseWriter, r *http.Request) {
 
 func GetMember(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
+
 	res, err := MemberService(vars["id"])
 	if err == mgo.ErrNotFound {
 		http.Error(w, err.Error(), 404)
@@ -78,6 +81,19 @@ func PutMember(w http.ResponseWriter, r *http.Request) {
 	}
 
 	err = PutMemberService(vars["id"], body)
+	if err == mgo.ErrNotFound {
+		http.Error(w, "Not Found", 404)
+	} else if err != nil {
+		http.Error(w, "Bad Request", 400)
+	} else {
+		w.WriteHeader(204)
+	}
+}
+
+func DeleteMember(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+
+	err := DeleteMemberService(vars["id"])
 	if err == mgo.ErrNotFound {
 		http.Error(w, "Not Found", 404)
 	} else if err != nil {
