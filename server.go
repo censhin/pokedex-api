@@ -7,7 +7,6 @@ import (
 )
 
 func main() {
-	log.Println("Connecting to database.")
 	db.Connect()
 	defer db.Close()
 

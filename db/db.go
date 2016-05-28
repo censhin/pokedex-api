@@ -1,6 +1,7 @@
 package db
 
 import (
+        "log"
 	"gopkg.in/mgo.v2"
 )
 
@@ -11,9 +12,10 @@ var port string = "27017"
 func Connect() {
 	var err error = nil
 	s := host + ":" + port
+        log.Println("Connecting to database " + s)
 	session, err = mgo.Dial(s)
 	if err != nil {
-		panic(err)
+                log.Panic(err)
 	}
 }
 
