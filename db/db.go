@@ -1,13 +1,15 @@
 package db
 
 import (
-        "log"
+	"log"
 	"gopkg.in/mgo.v2"
+	"github.com/censhin/pokedex-api/utils"
 )
 
 var session *mgo.Session = nil
-var host string = "172.17.0.2"
-var port string = "27017"
+var config = utils.GetConfig()
+var host string = config.Db.Host
+var port string = config.Db.Port
 
 func Connect() {
 	var err error = nil
