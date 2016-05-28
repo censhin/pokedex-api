@@ -15,7 +15,7 @@ func CollectionDao() (Pokemons, error) {
 	iter := collection.Find(nil).Iter()
 	err := iter.All(&result)
 	if err != nil {
-		return nil, err
+		return Pokemons{}, err
 	}
 
 	return Pokemons{result}, nil
@@ -30,7 +30,7 @@ func MemberDao(name string) (Pokemon, error) {
 	result := Pokemon{}
 	err := collection.Find(bson.M{"name": name}).One(&result)
 	if err != nil {
-		return nil, err
+		return Pokemon{}, err
 	}
 
 	return result, nil
