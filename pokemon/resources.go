@@ -11,6 +11,8 @@ func CollectionResource(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case "GET":
 		GetCollection(w, r)
+	case "POST":
+		PostCollection(w, r)
 	default:
 		http.Error(w, "Method not allowed.", 405)
 	}
@@ -36,6 +38,21 @@ func GetCollection(w http.ResponseWriter, r *http.Request) {
 	} else {
 		w.Header().Set("Content-Type", "application/json")
 		json.NewEncoder(w).Encode(res)
+	}
+}
+
+func PostCollection(w http.ResponseWriter, r *http.Request) {
+	body := Pokemon{}
+	err := json.NewDecoder(r.Body).Decode(&body)
+	if err != nil {
+		http.Error(w, "Could not parse JSON to Pokemon.", 422)
+	}
+
+	err = PostCollectionService(body)
+	if err != nil {
+		http.Error(w, err.Error(), 400)
+	} else {
+		w.WriteHeader(204)
 	}
 }
 

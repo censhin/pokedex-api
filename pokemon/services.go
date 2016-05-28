@@ -5,6 +5,10 @@ func CollectionService() (Pokemons, error) {
 	return CollectionDao()
 }
 
+func PostCollectionService(body Pokemon) error {
+	return CreateMemberDao(body)
+}
+
 func MemberService(name string) (Pokemon, error) {
 	return MemberDao(name)
 }
