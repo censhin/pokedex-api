@@ -36,3 +36,12 @@ func MemberDao(name string) Pokemon {
 
 	return result
 }
+
+func UpdateMemberDao(name string, body Pokemon) error {
+	session := db.Session()
+	defer session.Close()
+
+	collection := session.DB("pokedex").C("pokemon")
+
+	return collection.Update(name, body)
+}
