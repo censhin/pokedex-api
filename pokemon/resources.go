@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"github.com/gorilla/mux"
 	"net/http"
-	"gopkg.in/mgo.v2"
 )
 
 func CollectionResource(w http.ResponseWriter, r *http.Request) {
@@ -32,14 +31,12 @@ func MemberResource(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetCollection(w http.ResponseWriter, r *http.Request) {
-	res, err := CollectionService()
-	if err == mgo.ErrNotFound {
-		http.Error(w, err.Error(), 404)
-	} else if err != nil {
-		http.Error(w, err.Error(), 400)
+	res := CollectionService()
+	if res.Code > 399 {
+		http.Error(w, res.Body, res.Code)
 	} else {
 		w.Header().Set("Content-Type", "application/json")
-		json.NewEncoder(w).Encode(res)
+		json.NewEncoder(w).Encode(res.Body)
 	}
 }
 
@@ -50,25 +47,23 @@ func PostCollection(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Could not parse JSON to Pokemon.", 422)
 	}
 
-	err = PostCollectionService(body)
-	if err != nil {
-		http.Error(w, err.Error(), 400)
+	res := PostCollectionService(body)
+	if res.Code > 399 {
+		http.Error(w, res.Body, res.Code)
 	} else {
-		w.WriteHeader(204)
+		w.WriteHeader(res.Code)
 	}
 }
 
 func GetMember(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 
-	res, err := MemberService(vars["id"])
-	if err == mgo.ErrNotFound {
-		http.Error(w, err.Error(), 404)
-	} else if err != nil {
-		http.Error(w, err.Error(), 400)
+	res := MemberService(vars["id"])
+	if res.Code > 399 {
+		http.Error(w, res.Body, res.Code)
 	} else {
 		w.Header().Set("Content-Type", "application/json")
-		json.NewEncoder(w).Encode(res)
+		json.NewEncoder(w).Encode(res.Body)
 	}
 }
 
@@ -80,25 +75,21 @@ func PutMember(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Could not parse JSON to map.", 422)
 	}
 
-	err = PutMemberService(vars["id"], body)
-	if err == mgo.ErrNotFound {
-		http.Error(w, "Not Found", 404)
-	} else if err != nil {
-		http.Error(w, "Bad Request", 400)
+	res := PutMemberService(vars["id"], body)
+	if res.Code > 399 {
+		http.Error(w, res.Body, res.Code)
 	} else {
-		w.WriteHeader(204)
+		w.WriteHeader(res.Code)
 	}
 }
 
 func DeleteMember(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 
-	err := DeleteMemberService(vars["id"])
-	if err == mgo.ErrNotFound {
-		http.Error(w, "Not Found", 404)
-	} else if err != nil {
-		http.Error(w, "Bad Request", 400)
+	res := DeleteMemberService(vars["id"])
+	if res.Code > 399 {
+		http.Error(w, res.Body, res.Code)
 	} else {
-		w.WriteHeader(204)
+		w.WriteHeader(res.Code)
 	}
 }

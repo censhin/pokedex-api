@@ -35,3 +35,8 @@ type Evolution struct {
 	Name   string `bson:"name" json:"name"`
 	Number int    `bson:"number" json:"number"`
 }
+
+type Response struct {
+	Code int	`json:"code"`
+	Body string `json:"body"`
+}
