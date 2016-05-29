@@ -7,6 +7,9 @@ import (
 )
 
 type Config struct {
+    Server struct {
+        Port string
+    }
     Db struct {
 	    Host string
 	    Port string

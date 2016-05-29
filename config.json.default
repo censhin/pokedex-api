@@ -1,4 +1,7 @@
 {
+    "server": {
+        "port": ""
+    },
     "db": {
         "host": "",
         "port": "" 
