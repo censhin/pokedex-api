@@ -1,7 +1,7 @@
 # pokedex-api
 RESTful API to provide an interface to MongoDB for Pokedex data.
 
-## setup
+## basic setup
 You'll need to have a Go environment set up properly with a $GOPATH
 environment variable.
 ```
