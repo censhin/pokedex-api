@@ -12,8 +12,8 @@ func CollectionResource(w http.ResponseWriter, r *http.Request) {
 		GetCollection(w, r)
 	case "POST":
 		PostCollection(w, r)
-        case "OPTIONS":
-                Cors(w, r)
+	case "OPTIONS":
+        Cors(w, r)
 	default:
 		http.Error(w, "Method not allowed.", 405)
 	}
@@ -27,12 +27,10 @@ func MemberResource(w http.ResponseWriter, r *http.Request) {
 		PutMember(w, r)
 	case "DELETE":
 		DeleteMember(w, r)
-        case "OPTIONS":
-                Cors(w, r)
-        /*
+	case "OPTIONS":
+        Cors(w, r)
 	default:
 		http.Error(w, "Method not allowed.", 405)
-        */
 	}
 }
 
@@ -42,7 +40,7 @@ func GetCollection(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, res.Msg, res.Code)
 	} else {
 		w.Header().Set("Content-Type", "application/json")
-                w.Header().Set("Access-Control-Allow-Origin", "*")
+        w.Header().Set("Access-Control-Allow-Origin", "*")
 		json.NewEncoder(w).Encode(res.Body)
 	}
 }
@@ -70,7 +68,7 @@ func GetMember(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, res.Msg, res.Code)
 	} else {
 		w.Header().Set("Content-Type", "application/json")
-                w.Header().Set("Access-Control-Allow-Origin", "*")
+        w.Header().Set("Access-Control-Allow-Origin", "*")
 		json.NewEncoder(w).Encode(res.Body)
 	}
 }

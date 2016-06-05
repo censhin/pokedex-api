@@ -3,7 +3,7 @@ package main
 import (
 	"github.com/censhin/pokedex-api/moves"
 	"github.com/censhin/pokedex-api/pokemon"
-        "github.com/gorilla/mux"
+    "github.com/gorilla/mux"
 )
 
 func InitRoutes() *mux.Router {
